@@ -1,0 +1,27 @@
+specVersion: 0.0.4
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Factory
+    network: mumbai
+    source:
+      address: "0xAFB2671dC8dE49b79fCA3E857E93c14c1561FD37"
+      abi: Factory
+      startBlock: 28000000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - TokenGatedCreated
+        - VoucherCreated
+      abis:
+        - name: Factory
+          file: Factory/abis/Factory.json
+      eventHandlers:
+        - event: TokenGatedCreated(indexed address,string,indexed address)
+          handler: handleTokenGatedCreated
+        - event: VoucherCreated(indexed address,string)
+          handler: handleVoucherCreated
+      file: Factory/Factory.wasm
